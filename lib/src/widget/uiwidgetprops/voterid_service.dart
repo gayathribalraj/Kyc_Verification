@@ -1,8 +1,7 @@
 
-import 'package:dio/src/response.dart';
-import 'package:kyc_verification/src/core/api/api_config.dart';
-import 'package:kyc_verification/src/widget/kyc_verification.dart';
-import 'package:kyc_verification/src/widget/uiwidgetprops/voterid_request.dart';
+// import 'package:dio/src/response.dart';
+import 'package:kyc_verification/kyc_validation.dart';
+
 
 class VoterVerified with VerificationMixin {
   // create instance of class apiclient
@@ -11,7 +10,7 @@ class VoterVerified with VerificationMixin {
 
   @override
   Future<Response> verifyOnline(String url, {VoteridRequest? request}) {
-    return ApiClient().callPost(ApiConfig.VoterId, data: request!.toJson());
+    return ApiClient().callPost(ApiConfig.voterId, data: request!.toJson());
   }
 
   @override

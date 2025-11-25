@@ -2,13 +2,12 @@ name: kyc_verification
 description: "A reusable KYC verification Flutter package"
 version: 0.0.1
 
-# REQUIRED for pub.dev
-homepage: https://github.com/gayathribalraj/kyc_verification_package
-repository: https://github.com/gayathribalraj/kyc_verification_package
+homepage: https://github.com/gayathribalraj/kyc_package
+repository: https://github.com/gayathribalraj/kyc_package
 
 environment:
-  sdk: ">=3.0.0 <4.0.0"
-  flutter: ">=3.0.0"
+  sdk: ^3.8.1
+  flutter: ">=1.17.0"
 
 dependencies:
   dio: ^5.9.0

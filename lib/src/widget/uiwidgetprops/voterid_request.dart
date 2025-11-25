@@ -43,6 +43,16 @@ class VoteridRequest {
 
   @override
   String toString() => 'VoteridRequest(: $epicNo, consent: $consent)';
+  
+//Added missing equality operator to satisfy dart analyzer
+   @override
+  bool operator ==(Object other) {
+    if (identical(this, other)) return true;
+
+    return other is VoteridRequest &&
+        other.epicNo == epicNo &&
+        other.consent == consent;
+  }
  
   @override
   int get hashCode => epicNo.hashCode ^ consent.hashCode;

@@ -1,8 +1,5 @@
 
-import 'package:dio/src/response.dart';
-import 'package:kyc_verification/src/core/api/api_config.dart';
-import 'package:kyc_verification/src/widget/kyc_verification.dart';
-import 'package:kyc_verification/src/widget/uiwidgetprops/pan_request.dart';
+import 'package:kyc_verification/kyc_validation.dart';
 
 class PanVerified with VerificationMixin {
   // create instance of class apiclient
@@ -11,7 +8,7 @@ class PanVerified with VerificationMixin {
 
   @override
   Future<Response> verifyOnline(String url, {PanidRequest? request}) {
-    return ApiClient().callPost(ApiConfig.Pancard, data: request!.toJson());
+    return ApiClient().callPost(ApiConfig.panCard, data: request!.toJson());
   }
 
   @override

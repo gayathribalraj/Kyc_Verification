@@ -97,6 +97,7 @@ class _ConsoultFormState extends State<ConsentForm> {
                           });
 
                           if (response.toString().isNotEmpty) {
+                            // ignore: use_build_context_synchronously
                             ScaffoldMessenger.of(context).showSnackBar(
                               SnackBar(
                                 content: Text("OTP Send Successfully!!!"),
@@ -105,6 +106,7 @@ class _ConsoultFormState extends State<ConsentForm> {
                             await Future.delayed(const Duration(seconds: 2));
 
                             final optionOTPSheet = await showOtpBottomSheet(
+                              // ignore: use_build_context_synchronously
                               context,
                               widget.assetPath,
                               widget.url,
@@ -116,6 +118,7 @@ class _ConsoultFormState extends State<ConsentForm> {
                             });
                             debugPrint("final OTPSheet Data $optionOTPSheet");
                           } else {
+                            // ignore: use_build_context_synchronously
                             ScaffoldMessenger.of(context).showSnackBar(
                               SnackBar(content: Text("OTP Generate failed!!!")),
                             );

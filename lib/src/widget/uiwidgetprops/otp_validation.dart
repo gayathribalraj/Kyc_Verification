@@ -79,8 +79,11 @@ Future showOtpBottomSheet(BuildContext context, path, url) async {
                 isLoading.value = false;
 
                 // Close sheet & return response to previous screen
-                Navigator.pop(context);
-                Navigator.pop(context, response);
+                if (context.mounted) {
+                  Navigator.pop(context);
+                  Navigator.pop(context, response);
+                }
+               
               },
 
               style: ElevatedButton.styleFrom(
@@ -115,7 +118,7 @@ Future showOtpBottomSheet(BuildContext context, path, url) async {
 
 
 Future showValidateOptions(BuildContext context) async {
-  BuildContext ctx = context;
+  // BuildContext ctx = context;
   return await showModalBottomSheet(
     context: context,
     shape: RoundedRectangleBorder(

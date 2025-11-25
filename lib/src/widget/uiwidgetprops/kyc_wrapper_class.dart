@@ -1,11 +1,10 @@
 // Voter Verification UI A wrapper widget for voter ID verification input using KYCTextBox
 
-import 'package:flutter/material.dart';
 import 'package:kyc_verification/kyc_validation.dart';
 
 class VoterVerification extends StatefulWidget {
   final KYCTextBox kycTextBox;
-  VoterVerification({super.key, required this.kycTextBox}) {}
+  const VoterVerification({super.key, required this.kycTextBox}) ;
 
   @override
   State<StatefulWidget> createState() => _VoterVerificationState();
@@ -21,7 +20,7 @@ class _VoterVerificationState extends State<VoterVerification> {
 // Aadhaar Verification UI A wrapper widget for Aadhaar  verification input using KYCTextBox
 class AadhaarVerification extends StatefulWidget {
   final KYCTextBox kycTextBox;
-  AadhaarVerification({super.key, required this.kycTextBox}) {}
+  const AadhaarVerification({super.key, required this.kycTextBox});
 
   @override
   State<StatefulWidget> createState() => _AadhaarVerificationState();
@@ -39,7 +38,7 @@ class _AadhaarVerificationState extends State<AadhaarVerification> {
 
 class PanVerification extends StatefulWidget {
   final KYCTextBox kycTextBox;
-  PanVerification({super.key, required this.kycTextBox}) {}
+ const PanVerification({super.key, required this.kycTextBox}) ;
 
   @override
   State<StatefulWidget> createState() => _PanVerificationState();
@@ -58,7 +57,7 @@ class _PanVerificationState extends State<PanVerification> {
 
 class GSTVerification extends StatefulWidget {
   final KYCTextBox kycTextBox;
-  GSTVerification({super.key, required this.kycTextBox}) {}
+ const GSTVerification({super.key, required this.kycTextBox}) ;
 
   @override
   State<StatefulWidget> createState() => _GSTVerificationState();
@@ -76,7 +75,7 @@ class _GSTVerificationState extends State<GSTVerification> {
 
 class PassportVerification extends StatefulWidget {
   final KYCTextBox kycTextBox;
-  PassportVerification({super.key, required this.kycTextBox}) {}
+ const PassportVerification({super.key, required this.kycTextBox}) ;
 
   @override
   State<StatefulWidget> createState() => _PassportVerificationState();

@@ -7,22 +7,10 @@
   Supports validation, error display, and OTP verification
 */
 
-import 'dart:convert';
-
-import 'package:flutter/material.dart';
-import 'package:dio/dio.dart';
-import 'package:kyc_verification/src/AppData/app_constants.dart';
-import 'package:kyc_verification/src/widget/kyc_verification.dart';
-import 'package:kyc_verification/src/widget/uiwidgetprops/button_props.dart';
-import 'package:kyc_verification/src/widget/uiwidgetprops/consent_form.dart';
-import 'package:kyc_verification/src/widget/uiwidgetprops/otp_validation.dart';
-import 'package:kyc_verification/src/widget/uiwidgetprops/pan_request.dart';
-import 'package:kyc_verification/src/widget/uiwidgetprops/panid_service.dart';
-import 'package:kyc_verification/src/widget/uiwidgetprops/voterid_request.dart';
-import 'package:kyc_verification/src/widget/uiwidgetprops/voterid_service.dart';
-import 'package:reactive_forms/reactive_forms.dart';
-import 'form_props.dart';
-import 'style_props.dart';
+// import 'dart:convert';
+// import 'package:flutter/material.dart';
+import 'package:kyc_verification/kyc_validation.dart';
+// import 'package:reactive_forms/reactive_forms.dart';
 
 // type of verification handle by KYCTextBox
 
@@ -46,7 +34,7 @@ class KYCTextBox extends StatefulWidget {
 
   final ReactiveFormFieldCallback<String>? onChange;
   final bool showVerifyButton;
-  KYCTextBox({
+  const KYCTextBox({super.key, 
     this.fieldKey,
     required this.formProps,
     required this.styleProps,
@@ -75,11 +63,11 @@ class _KYCTextBoxState extends State<KYCTextBox> with VerificationMixin {
   String buttonText = '';
   String id = '';
   bool isValid = true;
-  final voterIdPattern = AppConstant.VOTERID_PATTERN;
-  final aadhaPattern = AppConstant.AADHAAR_PATTERN;
-  final panPattern = AppConstant.PAN_PATTERN;
-  final gstPattern = AppConstant.GST_PATTERN;
-  final passportPattern = AppConstant.PASSPORT_PATTERN;
+  final voterIdPattern = AppConstant.voterPattern;
+  final aadhaPattern = AppConstant.aadhaarPattern;
+  final panPattern = AppConstant.panPattern;
+  final gstPattern = AppConstant.gstPattern;
+  final passportPattern = AppConstant.passportPattern;
 
   String apiUrl = '';
   bool disabled = false;
@@ -89,8 +77,8 @@ class _KYCTextBoxState extends State<KYCTextBox> with VerificationMixin {
     super.initState();
 
     if (widget.kycNumber != null && widget.kycNumber!.isNotEmpty) {
-      print("widget.kycNumber => ${widget.kycNumber}");
-      print("widget.kycNumber.isNotEmpty => ${widget.kycNumber!.isNotEmpty}");
+      // print("widget.kycNumber => ${widget.kycNumber}");
+      // print("widget.kycNumber.isNotEmpty => ${widget.kycNumber!.isNotEmpty}");
       setState(() {
         isValid = true;
         isSuccess = true;
@@ -156,7 +144,6 @@ class _KYCTextBoxState extends State<KYCTextBox> with VerificationMixin {
   }
 
   //Wrapper over VerificationMixins verify(), online/offline verification based on user config.
-  @override
   Future<Response> verify({
     required bool isOffline,
     String? url,
@@ -178,9 +165,10 @@ class _KYCTextBoxState extends State<KYCTextBox> with VerificationMixin {
   @override
   Future<Response> verifyOnline(String url) async => ApiClient().callGet(url);
 
+  @override
   Widget build(BuildContext context) {
     return Padding(
-      padding: EdgeInsetsGeometry.all(16),
+      padding: const EdgeInsetsGeometry.all(16),
       child: Row(
         children: [
           Expanded(
@@ -199,14 +187,11 @@ class _KYCTextBoxState extends State<KYCTextBox> with VerificationMixin {
                       final raw = (control.value ?? '').toString().trim();
                       id = raw;
                       // Validate pattern for either any kyc
-                      isValid =
-                          (voterIdPattern.hasMatch(raw) ||
+                      isValid = (voterIdPattern.hasMatch(raw) ||
                           aadhaPattern.hasMatch(raw) ||
                           panPattern.hasMatch(raw) ||
-                          gstPattern.hasMatch(raw)||
-                          passportPattern.hasMatch(raw)
-                          
-                          );
+                          gstPattern.hasMatch(raw) ||
+                          passportPattern.hasMatch(raw));
                       setState(() {
                         buttonText = widget.buttonProps.label;
                         isSuccess = false;
@@ -216,17 +201,14 @@ class _KYCTextBoxState extends State<KYCTextBox> with VerificationMixin {
                       });
                     },
                     maxLength: widget.formProps.maxLength,
-                    style:
-                        widget.styleProps.textStyle ??
+                    style: widget.styleProps.textStyle ??
                         const TextStyle(fontSize: 14),
-                    decoration:
-                        widget.styleProps.inputDecoration ??
+                    decoration: widget.styleProps.inputDecoration ??
                         InputDecoration(
                           label: RichText(
                             text: TextSpan(
                               text: widget.formProps.label,
-                              style:
-                                  widget.styleProps.textStyle ??
+                              style: widget.styleProps.textStyle ??
                                   const TextStyle(
                                     color: Colors.black,
                                     fontSize: 18,
@@ -240,12 +222,10 @@ class _KYCTextBoxState extends State<KYCTextBox> with VerificationMixin {
                             ),
                           ),
                           // Keep error style under the field.
-                          errorStyle:
-                              widget.styleProps.textStyle ??
+                          errorStyle: widget.styleProps.textStyle ??
                               TextStyle(color: Colors.red, fontSize: 12),
                         ),
-                    validationMessages:
-                        widget.formProps.validator != null &&
+                    validationMessages: widget.formProps.validator != null &&
                             widget.formProps.maxLength != null
                         ? {
                             '': (control) {
@@ -276,13 +256,17 @@ class _KYCTextBoxState extends State<KYCTextBox> with VerificationMixin {
           //Verify Button
           ElevatedButton(
             style: ButtonStyle(
+              // ignore: deprecated_member_use
               backgroundColor: MaterialStateProperty.resolveWith<Color?>(
                 (states) => buttonBackgroundColor(),
               ),
+              // ignore: deprecated_member_use
               foregroundColor: MaterialStateProperty.resolveWith<Color?>(
                 (states) => widget.buttonProps.foregroundColor,
               ),
+              // ignore: deprecated_member_use
               padding: MaterialStateProperty.all(widget.buttonProps.padding),
+              // ignore: deprecated_member_use
               shape: MaterialStateProperty.all(
                 RoundedRectangleBorder(
                   borderRadius: BorderRadius.circular(
@@ -291,7 +275,6 @@ class _KYCTextBoxState extends State<KYCTextBox> with VerificationMixin {
                 ),
               ),
             ),
-
             onPressed: (!isValid || isLoading || disabled)
                 ? null
                 : () async {
@@ -343,7 +326,7 @@ class _KYCTextBoxState extends State<KYCTextBox> with VerificationMixin {
                         bool success = false;
 
                         if (widget.isOffline) {
-                          print("Offline response: $responseData");
+                          // print("Offline response: $responseData");
 
                           final decodedResponse = jsonDecode(
                             responseData['RESPONSE'],
@@ -353,22 +336,21 @@ class _KYCTextBoxState extends State<KYCTextBox> with VerificationMixin {
                           final status = decodedResponse['ursh']?['status']
                               ?.toString()
                               .toUpperCase();
-                          final responseCode =
-                              decodedResponse['ursh']?['responseCode']
-                                  ?.toString();
+                          final responseCode = decodedResponse['ursh']
+                                  ?['responseCode']
+                              ?.toString();
 
                           success =
                               (status == 'SUCCESS' && responseCode == '200');
                         } else {
-                          print("Online response: $responseData");
+                          // print("Online response: $responseData");
 
-                          success =
-                              (responseData['status'] == 'SUCCESS' &&
+                          success = (responseData['status'] == 'SUCCESS' &&
                               responseData['responseCode'] == '200');
                         }
 
                         if (success) {
-                          print("finally voter id response $response");
+                          // print("finally voter id response $response");
                           widget.onSuccess(response);
 
                           setState(() {
@@ -393,6 +375,7 @@ class _KYCTextBoxState extends State<KYCTextBox> with VerificationMixin {
                             buttonText = "Failed";
                           });
 
+                          // y
                           ScaffoldMessenger.of(context).showSnackBar(
                             SnackBar(
                               content: Text("Voter ID Verification Failed"),
@@ -410,6 +393,7 @@ class _KYCTextBoxState extends State<KYCTextBox> with VerificationMixin {
                           buttonText = "Failed";
                         });
 
+                        // y
                         ScaffoldMessenger.of(context).showSnackBar(
                           SnackBar(content: Text("Voter Verification Failed")),
                         );
@@ -451,11 +435,10 @@ class _KYCTextBoxState extends State<KYCTextBox> with VerificationMixin {
                         bool success = false;
 
                         if (widget.isOffline) {
-                          print("Offline response: $responseData");
+                          // print("Offline response: $responseData");
                           try {
                             final panValidation = responseData["PanValidation"];
-                            success =
-                                (responseData["Success"] == true) &&
+                            success = (responseData["Success"] == true) &&
                                 (panValidation != null) &&
                                 (panValidation["success"] == true);
                           } catch (error) {
@@ -464,7 +447,7 @@ class _KYCTextBoxState extends State<KYCTextBox> with VerificationMixin {
                           }
                         }
                         if (success) {
-                          print("finally pan id response $responseData");
+                          // print("finally pan id response $responseData");
                           widget.onSuccess(response);
 
                           setState(() {
@@ -475,6 +458,7 @@ class _KYCTextBoxState extends State<KYCTextBox> with VerificationMixin {
                             buttonText = "Verified";
                           });
 
+                          // y
                           ScaffoldMessenger.of(context).showSnackBar(
                             SnackBar(
                               content: Text("Pan ID Verified Successfully"),
@@ -491,6 +475,7 @@ class _KYCTextBoxState extends State<KYCTextBox> with VerificationMixin {
                             buttonText = "Failed";
                           });
 
+                          // y
                           ScaffoldMessenger.of(context).showSnackBar(
                             SnackBar(content: Text("PAN Verification Failed")),
                           );
@@ -507,6 +492,7 @@ class _KYCTextBoxState extends State<KYCTextBox> with VerificationMixin {
                           buttonText = "Failed";
                         });
 
+                        // y
                         ScaffoldMessenger.of(context).showSnackBar(
                           SnackBar(content: Text("PAN Verification Failed")),
                         );
@@ -538,7 +524,7 @@ class _KYCTextBoxState extends State<KYCTextBox> with VerificationMixin {
                         bool success = false;
 
                         if (widget.isOffline) {
-                          print("Offline response: $gstResponseData");
+                          // print("Offline response: $gstResponseData");
                         }
 
                         try {
@@ -548,20 +534,9 @@ class _KYCTextBoxState extends State<KYCTextBox> with VerificationMixin {
                               gstResp?["success"] == true;
 
                           final responseData = gstResp?["responseData"];
-                          final statusCode = responseData?["status_code"]
-                              ?.toString();
+                          final statusCode =
+                              responseData?["status_code"]?.toString();
 
-                          // Decode GstAuthentication String to Json
-                          final gstAuthString =
-                              responseData?["GstAuthentication"];
-                          Map<String, dynamic>? gstAuth;
-
-                          if (gstAuthString != null &&
-                              gstAuthString is String) {
-                            gstAuth = jsonDecode(gstAuthString);
-                          }
-
-                          // Final success condition
                           success = gstResponseSuccess && statusCode == "101";
                         } catch (error) {
                           debugPrint("GST parse error: $error");
@@ -569,7 +544,7 @@ class _KYCTextBoxState extends State<KYCTextBox> with VerificationMixin {
                         }
 
                         if (success) {
-                          print("GST Verified Successfully: $gstResponseData");
+                          // print("GST Verified Successfully: $gstResponseData");
                           widget.onSuccess(response);
 
                           setState(() {
@@ -580,6 +555,7 @@ class _KYCTextBoxState extends State<KYCTextBox> with VerificationMixin {
                             buttonText = "Verified";
                           });
 
+                          // y
                           ScaffoldMessenger.of(context).showSnackBar(
                             SnackBar(
                               content: Text("GST Verified Successfully"),
@@ -596,6 +572,7 @@ class _KYCTextBoxState extends State<KYCTextBox> with VerificationMixin {
                             buttonText = "Failed";
                           });
 
+                          // y
                           ScaffoldMessenger.of(context).showSnackBar(
                             SnackBar(content: Text("GST Verification Failed")),
                           );
@@ -613,6 +590,7 @@ class _KYCTextBoxState extends State<KYCTextBox> with VerificationMixin {
                           buttonText = "Failed";
                         });
 
+                        // y
                         ScaffoldMessenger.of(context).showSnackBar(
                           SnackBar(content: Text("GST Verification Failed")),
                         );
@@ -644,38 +622,31 @@ class _KYCTextBoxState extends State<KYCTextBox> with VerificationMixin {
                         bool success = false;
 
                         if (widget.isOffline) {
-                          print("Offline response: $passportResponseData");
+                          // print("Offline response: $passportResponseData");
                         }
 
                         try {
-                          final passportResp = passportResponseData["passportResp"];
+                          final passportResp =
+                              passportResponseData["passportResp"];
 
                           final bool passportResponseSuccess =
                               passportResp?["success"] == true;
 
                           final responseData = passportResp?["responseData"];
-                          final statusCode = responseData?["status_code"]
-                              ?.toString();
-
-                          // Decode GstAuthentication String to Json
-                          final passportString =
-                              responseData?["passport"];
-                          Map<String, dynamic>? passportData;
-
-                          if (passportString != null &&
-                              passportString is String) {
-                            passportData = jsonDecode(passportString);
-                          }
+                          final statusCode =
+                              responseData?["status_code"]?.toString();
 
                           // Final success condition
-                          success = passportResponseSuccess && statusCode == "101";
+                          success =
+                              passportResponseSuccess && statusCode == "101";
                         } catch (error) {
                           debugPrint("Passport parse error: $error");
                           success = false;
                         }
 
                         if (success) {
-                          print("Passport Verified Successfully: $passportResponseData");
+                          // print(
+                          //     "Passport Verified Successfully: $passportResponseData");
                           widget.onSuccess(response);
 
                           setState(() {
@@ -686,6 +657,7 @@ class _KYCTextBoxState extends State<KYCTextBox> with VerificationMixin {
                             buttonText = "Verified";
                           });
 
+                          // y
                           ScaffoldMessenger.of(context).showSnackBar(
                             SnackBar(
                               content: Text("Passport Verified Successfully"),
@@ -702,8 +674,10 @@ class _KYCTextBoxState extends State<KYCTextBox> with VerificationMixin {
                             buttonText = "Failed";
                           });
 
+                          // y
                           ScaffoldMessenger.of(context).showSnackBar(
-                            SnackBar(content: Text("Passport Verification Failed")),
+                            SnackBar(
+                                content: Text("Passport Verification Failed")),
                           );
                         }
                       } catch (e) {
@@ -719,8 +693,10 @@ class _KYCTextBoxState extends State<KYCTextBox> with VerificationMixin {
                           buttonText = "Failed";
                         });
 
+                        // y
                         ScaffoldMessenger.of(context).showSnackBar(
-                          SnackBar(content: Text("Passport Verification Failed")),
+                          SnackBar(
+                              content: Text("Passport Verification Failed")),
                         );
                       }
                     }
@@ -728,6 +704,7 @@ class _KYCTextBoxState extends State<KYCTextBox> with VerificationMixin {
                     // Aadhaar verification flow
 
                     if (widget.verificationType == VerificationType.aadhaar) {
+                      // y
                       final methodType = await showValidateOptions(context);
 
                       // select methodtype null means this condition failed
@@ -808,7 +785,7 @@ TextInputType getKeyboardType(VerificationType type) {
     case VerificationType.passport:
       return TextInputType.text;
 
-    default:
-      return TextInputType.text;
+    // default:
+    //   return TextInputType.text;
   }
 }
