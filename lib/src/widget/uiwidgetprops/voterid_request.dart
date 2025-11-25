@@ -1,4 +1,4 @@
-import 'dart:convert';
+import 'package:kyc_verification/kyc_validation.dart';
 
 class VoteridRequest {
  final String epicNo ;

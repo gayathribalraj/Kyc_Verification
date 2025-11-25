@@ -4,8 +4,9 @@
   @desc     : Reusable class for handling style properties like width,
    height, padding, border radius, text style, background color, etc.
 */
+import 'package:kyc_verification/kyc_validation.dart';
 
-import 'package:flutter/material.dart';
+// import 'package:flutter/material.dart';
 
 class StyleProps {
   final double borderRadius;

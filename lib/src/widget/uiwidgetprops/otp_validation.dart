@@ -3,11 +3,9 @@
   @created  : 12/11/2025
   @desc     : Reusable showOtpBottomSheet 
 */
+import 'package:kyc_verification/kyc_validation.dart';
 
-import 'package:flutter/material.dart';
-import 'package:flutter_otp_text_field/flutter_otp_text_field.dart';
-import 'package:kyc_verification/src/Utils/service.dart';
-import 'package:kyc_verification/src/widget/uiwidgetprops/sysmo_alert.dart';
+
 Future showOtpBottomSheet(BuildContext context, path, url) async {
   late String otpPin = '';
 
@@ -60,7 +58,6 @@ Future showOtpBottomSheet(BuildContext context, path, url) async {
                 //  If OTP not complete  don't close, don't success
                 if (otpPin.length != 6) {
                   isLoading.value = false;
-                  SysmoAlert.failure(message: "Please enter valid 6-digit OTP");
                   return;
                 }
 

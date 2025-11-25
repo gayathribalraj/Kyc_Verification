@@ -1,5 +1,4 @@
-import 'package:dio/dio.dart';
-import 'package:kyc_verification/src/widget/kyc_verification.dart';
+import 'package:kyc_verification/kyc_validation.dart';
 
 class KYCService extends KycVerification{
   Future<Response> verify({

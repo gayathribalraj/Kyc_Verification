@@ -4,12 +4,8 @@
   @desc     :VerificationMixin to handle online and offline verification logic using
    Dio for API calls and rootBundle for asset loading.
 */
+import 'package:kyc_verification/kyc_validation.dart';
 
-import 'dart:convert';
-
-import 'package:dio/dio.dart';
-import 'package:flutter/services.dart';
-import 'package:pretty_dio_logger/pretty_dio_logger.dart';
 
 mixin VerificationMixin {
   Future<Response> verifyOnline(String url);

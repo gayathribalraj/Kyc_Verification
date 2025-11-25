@@ -1,6 +1,4 @@
-import 'package:flutter/material.dart';
-import 'package:kyc_verification/src/Utils/service.dart';
-import 'package:kyc_verification/src/widget/uiwidgetprops/otp_validation.dart';
+import 'package:kyc_verification/kyc_validation.dart';
 
 
 class ConsentForm extends StatefulWidget {
