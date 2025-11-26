@@ -167,8 +167,8 @@ All verification screens follow the same UI structure using a shared layout and 
 
  Common Layout:
 
-  1 Title (e.g., Aadhaar Verification)
-  2 `KYCTextBox` input field
+  1. Title (e.g., Aadhaar Verification)
+  2. `KYCTextBox` input field
 
     ```
     class KYCTextBox extends StatefulWidget {
@@ -206,10 +206,10 @@ All verification screens follow the same UI structure using a shared layout and 
     }
 
     ```
-  3 Verify / Proceed button
-  4 Response display (Success / Error)
-  5 OTP screen (only for Aadhaar)
-  6 Consent screen (optional)
+  3. Verify / Proceed button
+  4. Response display (Success / Error)
+  5. OTP screen (only for Aadhaar)
+  6. Consent screen (optional)
 The UI is simple, predictable, and consistent across all KYC types.
 
 ## Installation
@@ -288,7 +288,7 @@ import 'package:kyc_verification/kyc_validation.dart';
 
 ## Props / Configuration
 
- 1 FormProps — Input Field Configuration
+ 1. FormProps — Input Field Configuration
 
     - formControlName	— Name of the form control
     - label — Input field label
@@ -297,7 +297,7 @@ import 'package:kyc_verification/kyc_validation.dart';
     - maxLength — Maximum character limit
     - validator (ValidationFunction?) — Custom validation function
 
-2 ButtonProps — Button Behavior & Appearance
+2. ButtonProps — Button Behavior & Appearance
 
    - label — Button text
    - onPressed — Callback function executed on tap
@@ -307,7 +307,7 @@ import 'package:kyc_verification/kyc_validation.dart';
    - borderRadius — Corner radius of the button
    - padding — Inner padding (EdgeInsetsGeometry)
 
-3 StyleProps — Visual Styling 
+3. StyleProps — Visual Styling 
 
   -  borderRadius (double) — Corner radius of the input field
   -  textStyle (TextStyle) — Style applied to the text
