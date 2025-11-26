@@ -1,301 +1,332 @@
-kyc_verification — Complete Documentation
 
-# Project Overview
+# Sysmo Verification 
 
-kyc_verification is a reusable Flutter package designed to simplify Aadhaar, PAN, and Voter ID etc.. verification processes.
+## Package introduction
 
-It supports:
+Sysmo Verification is a reusable Flutter package designed to simplify multiple KYC verification processes such as Aadhaar, PAN, Voter ID, Passport, GST, and OTP workflows. It includes UI widgets, service APIs, validation utilities, state properties, and reusable input components. Its primary purpose is to allow developers to integrate a unified KYC workflow into any Flutter application with minimal configuration.
 
-Online verification using API services
+The UI displays a single row containing a reactive text input field along with a customizable Verify button. You can easily change the button text or styling. By simply calling the corresponding class name for any KYC type, the package automatically provides the same UI layout with different underlying functionality.
 
-Offline verification using local JSON assets
+## Why Use This Package?
 
-Reusable UI components for input fields, OTP forms, and consent screens
+- Saves time — no need to build KYC flows again and again
 
-Reusable models + props for clean integration with any application architecture
+- Ensures consistency — all document types follow same UI/UX pattern
 
-# Features
-# KYC Verification Capabilities
-
-Aadhaar verification (OTP-based)
-
-Voter ID verification
-
-PAN verification
-
-GST verification
-
-Passport verification
-
-Offline KYC support using assets
-
-Online API KYC verification (Dio client)
-
-# Reusable UI Components
-
-Custom prop-based widgets for forms, input, buttons & styles
-
-Reusable KYC input field (KYCTextBox)
-
-OTP verification bottom sheet
-
-Consent form screen
-
-# Architecture Overview
-
-The package is structured into clean, independent layers:
-
-UI Components (Widgets)
-
-Reusable input fields, OTP screens, consent dialogs, etc.
-
-Verification Logic
-
-A VerificationMixin that standardizes the verification flow
-
-Service Layer
-
-KYCService for offline + online verification
-
-ApiClient using Dio
-
-OfflineVerificationHandler for JSON loading
-
-Core Models
-
-Models for requests/responses:
-
-PanidRequest
-
-VoteridRequest
-
-Aadhaar models
-
-Error models
-
-Props Layer
-
-Reusable customization models:
-
-FormProps
-
-ButtonProps
-
-StyleProps
-
-# Folder Structure
-lib/
- └── kyc_verification/
-     ├── widget/
-     ├── uiwidgetprops/
-     ├── core/
-     ├── model/
-     ├── service/
+- Modular & maintainable — clear separation between UI, data models, and services
 
 
-Each folder contains separate components for widgets, props, models, and services.
 
-# Installation (Package Creation)
+## This package solves that by providing 
 
-1. To create a Flutter package:
+- Reusable UI and Customizable widgets 
+- Different validation patterns for each kyc
+- share service structre based on online or offline
+- Same design, different logics 
 
-2. flutter create --template=package custom_widgets_library
+## Key Features 
 
-# How to Use in Main App
+### Customizable
 
-1. Add dependency (local path)
+Easily customize colors, text, form fields, API endpoints, and JSON configurations as needed.
+
+### Reusable 
+
+Common UI widgets and base classes are shared accross all kyc modules.
+
+```
+  Widget build(BuildContext context) {
+    return Padding(
+      padding: const EdgeInsetsGeometry.all(16),
+      child: Row(
+        children: [
+          Expanded(
+            child: Column(
+              children: [
+                // Textbox section Reactive Form field
+                IgnorePointer(
+                  ignoring: disabled,
+                  child: ReactiveTextField<String>(
+                    autofocus: false,
+                    keyboardType: getKeyboardType(widget.verificationType),
+                    formControlName: widget.formProps.formControlName,
+                    onChanged: (control) {
+                      //Reset button state when input changes
+
+                      final raw = (control.value ?? '').toString().trim();
+                      id = raw;
+                      // Validate pattern for either any kyc
+                      isValid = (voterIdPattern.hasMatch(raw) ||
+                          aadhaPattern.hasMatch(raw) ||
+                          panPattern.hasMatch(raw) ||
+                          gstPattern.hasMatch(raw) ||
+                          passportPattern.hasMatch(raw));
+                      setState(() {
+                        buttonText = widget.buttonProps.label;
+                        isSuccess = false;
+                        isError = false;
+                        isValid = isValid;
+                        disabled = false;
+                      });
+                    },
+                    maxLength: widget.formProps.maxLength,
+                    style: widget.styleProps.textStyle ??
+                        const TextStyle(fontSize: 14),
+                    decoration: widget.styleProps.inputDecoration ??
+                        InputDecoration(
+                          label: RichText(
+                            text: TextSpan(
+                              text: widget.formProps.label,
+                              style: widget.styleProps.textStyle ??
+                                  const TextStyle(
+                                    color: Colors.black,
+                                    fontSize: 18,
+                                  ),
+                              children: [
+                                TextSpan(
+                                  text: widget.formProps.mandatory ? ' *' : '',
+                                  style: const TextStyle(color: Colors.red),
+                                ),
+                              ],
+                            ),
+                          ),
+                          // Keep error style under the field.
+                          errorStyle: widget.styleProps.textStyle ??
+                              TextStyle(color: Colors.red, fontSize: 12),
+                        ),
+                    validationMessages: widget.formProps.validator != null &&
+                            widget.formProps.maxLength != null
+                        ? {
+                            '': (control) {
+                              final abstractControl =
+                                  control as AbstractControl<dynamic>;
+                              final errorMessage = widget.formProps.validator!(
+                                abstractControl,
+                              );
+                              return errorMessage;
+                            },
+                          }
+                        : null,
+                  ),
+                ),
+                // Custom validation error message pattern,
+                if (!isValid)
+                  Padding(
+                    padding: EdgeInsets.only(top: 4, left: 4),
+                    child: Text(
+                      '${widget.validationPattern}',
+                      style: TextStyle(color: Colors.red, fontSize: 12),
+                    ),
+                  ),
+              ],
+            ),
+          ),
+          const SizedBox(width: 10),
+          //Verify Button
+          ElevatedButton(
+            style: ButtonStyle(
+              // ignore: deprecated_member_use
+              backgroundColor: MaterialStateProperty.resolveWith<Color?>(
+                (states) => buttonBackgroundColor(),
+              ),
+              // ignore: deprecated_member_use
+              foregroundColor: MaterialStateProperty.resolveWith<Color?>(
+                (states) => widget.buttonProps.foregroundColor,
+              ),
+              // ignore: deprecated_member_use
+              padding: MaterialStateProperty.all(widget.buttonProps.padding),
+              // ignore: deprecated_member_use
+              shape: MaterialStateProperty.all(
+                RoundedRectangleBorder(
+                  borderRadius: BorderRadius.circular(
+                    widget.buttonProps.borderRadius,
+                  ),
+                ),
+              ),
+            ),
+          ),
+        ]
+
+            onPressed: (){}
+      );
+    )
+  }
+```
+
+## How the UI Works
+
+All verification screens follow the same UI structure using a shared layout and a reusable input component.Only the business logic, API model, and validation rules change.
+
+## Common Layout:
+
+* Title (e.g., Aadhaar Verification)
+* `KYCTextBox` input field
+
+   ```
+   class KYCTextBox extends StatefulWidget {
+  final FormProps formProps;
+  final StyleProps styleProps;
+  final ButtonProps buttonProps;
+  final bool isOffline;
+  final String? assetPath;
+  final String apiUrl;
+  final ValueChanged<dynamic> onSuccess;
+  final ValueChanged<dynamic> onError;
+  final Key? fieldKey;
+  final String? validationPattern;
+  final VerificationType verificationType;
+  final String? kycNumber;
+
+  final ReactiveFormFieldCallback<String>? onChange;
+  final bool showVerifyButton;
+  const KYCTextBox({super.key, 
+    this.fieldKey,
+    required this.formProps,
+    required this.styleProps,
+    this.showVerifyButton = false,
+    this.onChange,
+    required this.buttonProps,
+    required this.isOffline,
+    this.assetPath,
+    required this.onSuccess,
+    required this.onError,
+    this.validationPattern,
+    required this.apiUrl,
+    required this.verificationType,
+    this.kycNumber,
+  });
+   }
+
+   ```
+* Verify / Proceed button
+* Response display (Success / Error)
+* OTP screen (only for Aadhaar)
+* Consent screen (optional)
+* The UI is simple, predictable, and consistent across all KYC types.
+
+## Installation
+
+Add this to your project’s `pubspec.yaml` dependencies: 
+```
 dependencies:
   kyc_verification:
-    path: D:\Kyc_Verification
+    path: ../path_to_kyc_verification   # or version if published
 
-2. Import
+```
+Then run:
+```
+flutter pub get
+
+```
+`or`
+```
+flutter pub add kyc_verification
+
+```
+## Usage:
+Import the package:
+
+```
 import 'package:kyc_verification/kyc_validation.dart';
 
-# Usage Example — Voter Verification
+```
 
+## Then use the main widget where needed. Example for PAN verification:
 
-VoterVerification(
+```
+ PanVerification(
   kycTextBox: KYCTextBox(
-    formProps: FormProps(
-      formControlName: 'voterId',
-      label: 'Enter Voter ID',
+    validationPattern:,
+    formProps:FormProps(
+      formControlName: 'pan',
+      label: 'panNumber',
       mandatory: true,
-      maxLength: 10,
+       maxLength: 10,
     ),
-  ),
-)
+    // if u want to style the input text fields (optinol)
+    styleProps: StyleProps(),
+    apiUrl: 'your endpoint'.
+    // customize the buttonprops
+    buttonProps:ButtonProps(
+      label: 'lable name',
+      foregroundColor: Colors.white,
+    
+    )
+    // this is optional handler we provid online offline handler 
+    isOffline: true / false 
+    onSuccess:(value)async{
+      print(onSuccess ${value.data})
 
-# Components Documentation
+    }
+     onError:(value)async{
+      print(onerror $value)
 
-1. FormProps
+    }
+    assetPath:'you path',
+    // based on button fuctinallity
+   verificationType: VerificationType.pan, 
+  kycNumber:form.controls['pan']?.value != null?form.controls['pan']!.value.toString(): null,
+  ),),
 
-Defines configuration for the input field.
+```
+## Supported KYC Types & Behavior
 
-Field	Description
-formControlName	Name of the form control
-label	Input label
-mandatory	Is field required?
-maxLength	Max character limit
-2. ButtonProps
+KYC Type	Input Field	Flow Type	Notes
 
-Controls button behavior.
+- Aadhaar	: Aadhaar Number	OTP-based	Shows OTP screen after initial validation
+- PAN	: PAN Number	Instant verify	Single request → instant result
+- Voter ID : 	Voter Number	Instant verify	Single request → instant result
+- GST	: GST Number	Instant verify	Single request → instant result
+- Passport: Passport Number	Instant verify	Single request → instant result
 
-Field	Description
-label	Button text
-onPressed	Callback
-disabled	Enable/Disable the button
-3. StyleProps
 
-Manages widget styles.
+## Defines configuration for the input field.
 
-Field	Description
-borderRadius	Corner radius
-textStyle	Label + input text style
+ ### Field	Description:
 
-# Verification Services
+ * FormProps :
 
-1. VerificationMixin
+    - formControlName	Name of the form control
+    - label	Input label
+    - hint Placeholder Name
+    - mandatory	Is field required?
+    - maxLength	Max character limit
+    - ValidationFunction? validator
 
-Defines common verification behaviors:
+* ButtonProps Controls button behavior:
 
-verifyOnline()
+   - label	 text
+   - onPressed	Callback
+   - disabled	bool
+   - backgroundColor Color
+   - foregroundColor Color
+   - borderRadius double
+   - padding EdgeInsetsGeometry
 
-verifyOffline()
+* StyleProps Manages widget styles:
 
-Used as a shared contract for Voter, PAN, Aadhaar verification flows.
+  -  double borderRadius;
+  -  TextStyle textStyle;
+  -  EdgeInsetsGeometry padding;
+  -  Color backgroundColor;
+  -  Color borderColor;
+  -  InputDecoration inputDecoration;
+  -  CrossAxisAlignment crossAxisAlignment;
 
-2. KYCService
 
-Centralized entry for verification.
 
-Method:
-verify({
-  required bool isOffline,
-  String? assetPath,
-  String? url,
-});
 
-# Responsibilities:
 
-Switches between online/offline mode
 
-Calls API using Dio
 
-Loads local assets for offline validation
 
-Returns standardized response
 
-3. ApiClient
 
-Handles network logic.
 
-Features:
 
-Adds API headers
 
-Logs request/response
 
-Supports POST + GET
 
-Error handling wrapper
 
-4. OfflineVerificationHandler
 
-Loads offline JSON data.
 
-Logic:
-rootBundle.loadString(assetPath)
-
-
-Used for:
-
-Testing
-
-Offline onboarding
-
-Backup network failure
-
-# Models Documentation
-Example Models
-PanidRequest
-Field	Type
-panNumber	String
-
-Example:
-
-{
-  "panNumber": "ABCDE1234F"
-}
-
-VoteridRequest
-Field	Type
-epicNo	String
-
-Example:
-
-{
-  "epicNo": "XYZ1234567"
-}
-
-#  Widgets
-1. VoterVerification
-
-Handles:
-
-Input validation
-
-Triggering KYCService
-
-Loading indicator
-
-Provides response through callbacks
-
-Offline + online fallback
-
-2. ConsentForm
-
-Terms & Conditions
-
-"I agree" checkbox
-
-Accept/Reject actions
-
-OTP trigger option
-
-3. OTP Bottom Sheet
-
-Includes:
-
-6-digit OTP input
-
-Resend option
-
-Loading indicator
-
-Calls API for OTP verification
-
-# Error Handling
-
-Common error cases handled:
-
-Invalid input format
-
-Wrong OTP
-
-API timeout
-
-Missing offline JSON file
-
-No data source provided
-
-Null/empty input
-
-# Sample Offline JSON Response
-{
-  "success": true,
-  "data": {
-    "name": "John Doe",
-    "voterId": "ABC1234567",
-    "state": "Tamil Nadu"
-  }
-}
