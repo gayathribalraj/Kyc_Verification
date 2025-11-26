@@ -31,11 +31,11 @@ Its primary purpose is to enable developers to integrate a unified and consisten
 
 ## Key Features 
 
-  * Customizable
+  - Customizable
 
   Easily customize lable, colors, text, form fields, API endpoints, and JSON configurations as needed and etc...
 
-  * Reusable 
+  - Reusable 
 
   Common UI widgets and base classes are shared across all KYC modules.
 
