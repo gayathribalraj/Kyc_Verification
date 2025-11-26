@@ -277,7 +277,6 @@ import 'package:kyc_verification/kyc_validation.dart';
 ```
 ## Supported KYC Types & Behavior
 
-![KYC Package Banner](assets/kyc_behavior.png)
 <img width="912" height="353" alt="kyc_behavior" src="https://github.com/user-attachments/assets/d8006924-dbed-4594-b786-f5e655c2279d" />
 
 ## Props / Configuration
