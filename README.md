@@ -1,7 +1,7 @@
 
 # Sysmo Verification 
 
-## Package introduction
+## Package Introduction
 
 Sysmo Verification is a reusable Flutter package designed to simplify multiple KYC verification processes such as Aadhaar, PAN, Voter ID, Passport, GST, and OTP workflows. It includes UI widgets, service APIs, validation utilities, state properties, and reusable input components.
 
@@ -256,25 +256,28 @@ import 'package:kyc_verification/kyc_validation.dart';
     buttonProps: ButtonProps(
       label: 'Verify',
       foregroundColor: Colors.white,
-    ),
-    isOffline: false,
-    onSuccess: (value) async {
-      print('Success: ${value.data}');
-    },
-    onError: (value) async {
-      print('Error: $value');
-    },
-    verificationType: VerificationType.pan,
-    kycNumber:
-        form.controls['pan']?.value?.toString(),
-  ),
-);
+    
+    )
+    // this is optional handler we provid online offline handler 
+    isOffline: true / false 
+    onSuccess:(value)async{
+      print(onSuccess ${value.data})
 
+    }
+     onError:(value)async{
+      print(onerror $value)
+
+    }
+    assetPath:'you path',
+    // based on button fuctinallity
+   verificationType: VerificationType.pan, 
+  kycNumber:form.controls['pan']?.value != null?form.controls['pan']!.value.toString(): null,
+  ),),
 
 ```
 ## Supported KYC Types & Behavior
 
-KYC Type	Input Field	Flow Type	Notes
+![KYC Package Banner](assets/kyc_behavior.png)
 
 - Aadhaar	: Aadhaar Number	OTP-based	Shows OTP screen after initial validation
 - PAN	: PAN Number	Instant verify	Single request → instant result

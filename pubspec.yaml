@@ -27,7 +27,7 @@ dev_dependencies:
 
 flutter:
  # Example for asset usage (uncomment if needed)
-  # assets:
-  #   - assets/data/voter_validation.json
+  assets:
+    - assets/kyc_behavior.png
 
 
