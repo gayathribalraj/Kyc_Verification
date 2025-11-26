@@ -1,7 +1,7 @@
 
 # Sysmo Verification 
 
-## Package introduction
+## Package Introduction
 
 Sysmo Verification is a reusable Flutter package designed to simplify multiple KYC verification processes such as Aadhaar, PAN, Voter ID, Passport, GST, and OTP workflows. It includes UI widgets, service APIs, validation utilities, state properties, and reusable input components. Its primary purpose is to allow developers to integrate a unified KYC workflow into any Flutter application with minimal configuration.
 
@@ -236,37 +236,31 @@ import 'package:kyc_verification/kyc_validation.dart';
 ```
  PanVerification(
   kycTextBox: KYCTextBox(
-    validationPattern:,
-    formProps:FormProps(
+    validationPattern: '[A-Z]{5}[0-9]{4}[A-Z]{1}',
+    formProps: FormProps(
       formControlName: 'pan',
-      label: 'panNumber',
+      label: 'PAN Number',
       mandatory: true,
-       maxLength: 10,
+      maxLength: 10,
     ),
-    // if u want to style the input text fields (optinol)
     styleProps: StyleProps(),
-    apiUrl: 'your endpoint'.
-    // customize the buttonprops
-    buttonProps:ButtonProps(
-      label: 'lable name',
+    apiUrl: 'YOUR_ENDPOINT',
+    buttonProps: ButtonProps(
+      label: 'Verify',
       foregroundColor: Colors.white,
-    
-    )
-    // this is optional handler we provid online offline handler 
-    isOffline: true / false 
-    onSuccess:(value)async{
-      print(onSuccess ${value.data})
-
-    }
-     onError:(value)async{
-      print(onerror $value)
-
-    }
-    assetPath:'you path',
-    // based on button fuctinallity
-   verificationType: VerificationType.pan, 
-  kycNumber:form.controls['pan']?.value != null?form.controls['pan']!.value.toString(): null,
-  ),),
+    ),
+    isOffline: false,
+    onSuccess: (value) async {
+      print('Success: ${value.data}');
+    },
+    onError: (value) async {
+      print('Error: $value');
+    },
+    verificationType: VerificationType.pan,
+    kycNumber:
+        form.controls['pan']?.value?.toString(),
+  ),
+);
 
 ```
 ## Supported KYC Types & Behavior
