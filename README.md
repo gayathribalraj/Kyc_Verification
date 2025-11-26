@@ -33,11 +33,11 @@ Its primary purpose is to enable developers to integrate a unified and consisten
 
   1. Customizable
 
-  Easily customize lable, colors, text, form fields, API endpoints, and JSON configurations as needed and etc...
+       Easily customize lable, colors, text, form fields, API endpoints, and JSON configurations as needed and etc...
 
   2. Reusable 
 
-  Common UI widgets and base classes are shared across all KYC modules.
+      Common UI widgets and base classes are shared across all KYC modules.
 
   ```
     Widget build(BuildContext context) {
