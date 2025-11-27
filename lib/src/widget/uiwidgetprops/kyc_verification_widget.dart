@@ -28,11 +28,14 @@ class KYCTextBox extends StatefulWidget {
   final ValueChanged<dynamic> onSuccess;
   final ValueChanged<dynamic> onError;
   final Key? fieldKey;
-  final String? validationPattern;
+  // final String? validationPattern;
   final VerificationType verificationType;
   final String? kycNumber;
   final ReactiveFormFieldCallback<String>? onChange;
   final bool showVerifyButton;
+    final String? validationPatternErrorMessage;
+
+
 
   const KYCTextBox({
     super.key,
@@ -46,10 +49,11 @@ class KYCTextBox extends StatefulWidget {
     this.assetPath,
     required this.onSuccess,
     required this.onError,
-    this.validationPattern,
+    // this.validationPattern,
     required this.apiUrl,
     required this.verificationType,
     this.kycNumber,
+    this.validationPatternErrorMessage,
   });
 
   @override
@@ -250,6 +254,9 @@ class _KYCTextBoxState extends State<KYCTextBox> {
 
   /// Verify Aadhaar
   Future<void> _verifyAadhaar() async {
+     setState(() {
+        _buttonStateManager.reset(widget.buttonProps.label);
+      });
     final methodType = await showValidateOptions(context);
     
     if (methodType == null) return;
@@ -312,7 +319,7 @@ class _KYCTextBoxState extends State<KYCTextBox> {
               formProps: widget.formProps,
               styleProps: widget.styleProps,
               validationManager: _inputValidator,
-              validationPattern: widget.validationPattern,
+              validationPatternErrorMessage: widget.validationPatternErrorMessage,
               disabled: _buttonStateManager.isDisabled,
               keyboardType: _getKeyboardType(widget.verificationType),
               onChange: (control) {

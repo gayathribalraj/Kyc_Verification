@@ -3,6 +3,7 @@ export 'src/core/enums_and_state.dart';
 export 'src/core/response_parsers.dart';
 export 'src/core/verification_handlers.dart';
 export 'src/core/api/api_client.dart';
+export 'src/core/api/api_config.dart';
 export 'src/core/api/offline_verification_handler.dart';
 
 // Refactored UI components
@@ -14,16 +15,12 @@ export 'src/widget/uiwidgetprops/otp_sheet.dart';
 export 'src/widget/uiwidgetprops/kyc_verification_widget.dart';
 export 'src/widget/uiwidgetprops/consent_form.dart';
 export 'src/widget/uiwidgetprops/form_props.dart';
-export 'src/widget/uiwidgetprops/otp_validation.dart' hide showOtpBottomSheet;
 export 'src/widget/uiwidgetprops/button_props.dart';
 export 'src/widget/uiwidgetprops/style_props.dart';
 export 'src/widget/uiwidgetprops/kyc_wrapper_class.dart';
-export 'src/widget/uiwidgetprops/voterid_service.dart';
 export 'src/widget/uiwidgetprops/voterid_request.dart';
 export 'src/widget/uiwidgetprops/pan_request.dart';
 export 'src/widget/kyc_verification.dart' hide OfflineVerificationHandler, ApiClient;
-export 'src/widget/uiwidgetprops/panid_service.dart';
-export 'src/core/api/api_config.dart';
 export 'package:dio/src/response.dart';
 export 'package:flutter_test/flutter_test.dart';
 export 'dart:convert';

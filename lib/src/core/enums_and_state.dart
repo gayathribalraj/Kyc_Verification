@@ -12,8 +12,6 @@ enum VerificationType { voter, aadhaar, pan, gst, passport }
 /// Button state enumeration
 enum ButtonState { idle, loading, success, error }
 
-/// Verification state enumeration
-enum VerificationState { pending, verifying, verified, failed }
 
 /// Manages button UI state
 class ButtonStateManager {

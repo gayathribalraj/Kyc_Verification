@@ -11,7 +11,7 @@ class KYCInputField extends StatelessWidget {
   final FormProps formProps;
   final StyleProps styleProps;
   final InputValidationManager validationManager;
-  final String? validationPattern;
+  final String? validationPatternErrorMessage;
   final bool disabled;
   final TextInputType keyboardType;
   final ReactiveFormFieldCallback<String>? onChange;
@@ -21,7 +21,7 @@ class KYCInputField extends StatelessWidget {
     required this.formProps,
     required this.styleProps,
     required this.validationManager,
-    this.validationPattern,
+    this.validationPatternErrorMessage,
     this.disabled = false,
     this.keyboardType = TextInputType.text,
     this.onChange,
@@ -68,11 +68,11 @@ class KYCInputField extends StatelessWidget {
                 : null,
           ),
         ),
-        if (!validationManager.isValid && validationPattern != null)
+        if (!validationManager.isValid && validationPatternErrorMessage != null)
           Padding(
             padding: const EdgeInsets.only(top: 4, left: 4),
             child: Text(
-              validationPattern!,
+              validationPatternErrorMessage!,
               style: const TextStyle(color: Colors.red, fontSize: 12),
             ),
           ),

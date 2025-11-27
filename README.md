@@ -217,8 +217,8 @@ The UI is simple, predictable, and consistent across all KYC types.
 Add this to your project’s `pubspec.yaml` dependencies: 
 ```
 dependencies:
-  kyc_verification:
-    path: ../path_to_kyc_verification   # or version if published
+  sysmo_verification:
+    path: ../path_to_sysmo_verification   # or version if published
 
 ```
 Then run:
@@ -228,14 +228,14 @@ flutter pub get
 ```
 or
 ```
-flutter pub add kyc_verification
+flutter pub add sysmo_verification
 
 ```
 ## Usage:
 Import the package:
 
 ```
-import 'package:kyc_verification/kyc_validation.dart';
+import 'package:sysmo_verification/kyc_validation.dart';
 
 ```
 

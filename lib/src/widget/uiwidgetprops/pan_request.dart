@@ -38,7 +38,7 @@ class PanidRequest {
   @override
   String toString() => 'PanidRequest(: $pan, consent: $consent)';
 
-//Added missing equality operator to satisfy dart analyzer
+//equality operator to satisfy dart analyzer
 
   @override
   bool operator ==(Object other) {

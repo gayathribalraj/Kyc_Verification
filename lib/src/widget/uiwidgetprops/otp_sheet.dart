@@ -155,3 +155,37 @@ Future<dynamic> showOtpBottomSheet(
     ),
   );
 }
+Future showValidateOptions(BuildContext context) async {
+  // BuildContext ctx = context;
+  return await showModalBottomSheet(
+    context: context,
+    shape: RoundedRectangleBorder(
+      borderRadius: BorderRadius.vertical(top: Radius.circular(20)),
+    ),
+    builder: (BuildContext context) {
+      return Container(
+        padding: EdgeInsets.all(16),
+        height: 180,
+        child: Column(
+          children: [
+            ListTile(
+              leading: Icon(Icons.qr_code_scanner),
+              title: Text('Biometric'),
+              onTap: () {
+                Navigator.pop(context, 'bio');
+              },
+            ),
+            ListTile(
+              leading: Icon(Icons.text_fields),
+              title: Text('OTP'),
+              onTap: () {
+                Navigator.pop(context, 'otp');
+              },
+            ),
+          ],
+        ),
+      );
+    },
+  );
+}
+
