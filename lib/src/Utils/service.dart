@@ -1,4 +1,4 @@
-import 'package:kyc_verification/kyc_validation.dart';
+import 'package:sysmo_verification/kyc_validation.dart';
 
 class KYCService extends KycVerification{
   Future<Response> verify({

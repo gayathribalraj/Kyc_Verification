@@ -285,7 +285,6 @@ import 'package:kyc_verification/kyc_validation.dart';
 - GST	: GST Number	Instant verify	Single request → instant result
 - Passport: Passport Number	Instant verify	Single request → instant result
 
-
 ## Props / Configuration
 
  * FormProps — Input Field Configuration

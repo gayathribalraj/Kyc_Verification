@@ -4,7 +4,7 @@
   @desc     : Reusable class for handling button properties like label, color, size, border radius, padding, disabled state, and onPressed callback.
 */
 
-import 'package:kyc_verification/kyc_validation.dart';
+import 'package:sysmo_verification/kyc_validation.dart';
 
 
 class ButtonProps {

@@ -1,5 +1,6 @@
 
-import 'package:kyc_verification/kyc_validation.dart';
+import 'package:sysmo_verification/kyc_validation.dart';
+import 'package:sysmo_verification/kyc_validation.dart' as ApiConfig;
 
 class PanVerified with VerificationMixin {
   // create instance of class apiclient

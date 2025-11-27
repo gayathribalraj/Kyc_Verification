@@ -1,5 +1,4 @@
-import 'package:kyc_verification/kyc_validation.dart';
-
+import 'package:sysmo_verification/kyc_validation.dart';
 
 class ConsentForm extends StatefulWidget {
   final String aadhaarmethod;

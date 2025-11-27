@@ -1,6 +1,6 @@
 // Voter Verification UI A wrapper widget for voter ID verification input using KYCTextBox
 
-import 'package:kyc_verification/kyc_validation.dart';
+import 'package:sysmo_verification/kyc_validation.dart';
 
 class VoterVerification extends StatefulWidget {
   final KYCTextBox kycTextBox;

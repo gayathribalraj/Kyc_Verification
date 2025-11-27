@@ -4,7 +4,7 @@
   @desc     :VerificationMixin to handle online and offline verification logic using
    Dio for API calls and rootBundle for asset loading.
 */
-import 'package:kyc_verification/kyc_validation.dart';
+import 'package:sysmo_verification/kyc_validation.dart';
 
 
 mixin VerificationMixin {

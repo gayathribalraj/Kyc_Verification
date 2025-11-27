@@ -1,6 +1,7 @@
 
 // import 'package:dio/src/response.dart';
-import 'package:kyc_verification/kyc_validation.dart';
+import 'package:sysmo_verification/kyc_validation.dart';
+import 'package:sysmo_verification/kyc_validation.dart' as ApiConfig;
 
 
 class VoterVerified with VerificationMixin {

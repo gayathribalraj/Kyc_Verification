@@ -3,7 +3,7 @@
   @created  : 12/11/2025
   @desc     : Reusable showOtpBottomSheet 
 */
-import 'package:kyc_verification/kyc_validation.dart';
+import 'package:sysmo_verification/kyc_validation.dart';
 
 
 Future showOtpBottomSheet(BuildContext context, path, url) async {
