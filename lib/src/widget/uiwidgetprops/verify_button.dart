@@ -23,7 +23,7 @@ class VerifyButton extends StatelessWidget {
   Widget build(BuildContext context) {
     return ElevatedButton(
       style: ButtonStyle(
-        backgroundColor: MaterialStateProperty.resolveWith<Color?>(
+        backgroundColor: WidgetStateProperty.resolveWith<Color?>(
           (_) => stateManager.getBackgroundColor(
             idleColor: buttonProps.backgroundColor ?? const Color.fromARGB(255, 3, 9, 110),
             loadingColor: Colors.grey,
@@ -31,11 +31,11 @@ class VerifyButton extends StatelessWidget {
             errorColor: Colors.red,
           ),
         ),
-        foregroundColor: MaterialStateProperty.resolveWith<Color?>(
+        foregroundColor: WidgetStateProperty.resolveWith<Color?>(
           (_) => buttonProps.foregroundColor,
         ),
-        padding: MaterialStateProperty.all(buttonProps.padding),
-        shape: MaterialStateProperty.all(
+        padding: WidgetStateProperty.all(buttonProps.padding),
+        shape: WidgetStateProperty.all(
           RoundedRectangleBorder(
             borderRadius: BorderRadius.circular(buttonProps.borderRadius),
           ),

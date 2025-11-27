@@ -113,7 +113,6 @@ class _KYCTextBoxState extends State<KYCTextBox> {
   /// Handle input change and validation
   void _handleInputChange(String value) {
     _currentInput = value.trim();
-    final isValidInput = _inputValidator.validate(_currentInput);
     
     setState(() {
       // Reset button state when input changes

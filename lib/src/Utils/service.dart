@@ -1,4 +1,5 @@
 import 'package:sysmo_verification/kyc_validation.dart';
+import 'package:sysmo_verification/src/widget/kyc_verification.dart' hide OfflineVerificationHandler;
 
 class KYCService extends KycVerification{
   Future<Response> verify({
